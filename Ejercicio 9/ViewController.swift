@@ -46,14 +46,21 @@ class ViewController: UIViewController {
             return
         }
         
-        // Calcular las horas de ocio al día
-        let horasOcioDiarias = 24 - (horasTrabajo + horasDormir)
-        
         // Calcular los días restantes de vida
         let diasRestantes = (esperanzaVida - edad) * 365
         
+        // Calcular los días laborales por año
+        let diasLaboralesAnio = 365 - (52 * 2) - 30 // Restamos fines de semana y vacaciones
+        let totalDiasLaborales = diasLaboralesAnio * min(40, esperanzaVida - edad)
+   
+        // Calcular las horas totales trabajadas
+        let horasTrabajoTotales = totalDiasLaborales * horasTrabajo
+        
+        // Calcular horas de ocio totales diarias
+        let horasOcioDiarias = 24 - (horasTrabajo + horasDormir)
+        
         // Calcular los días de ocio restantes en la vida
-        let diasOcioRestantes = diasRestantes * horasOcioDiarias / 24
+        let diasOcioRestantes = (diasRestantes * horasOcioDiarias - horasTrabajoTotales) / 24
         
         // Mostrar los días de ocio restantes
         ocioLabel.text = "Días de ocio restantes: \(Int(diasOcioRestantes))"
